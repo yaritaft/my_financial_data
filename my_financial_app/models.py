@@ -1,13 +1,13 @@
 from django.db import models
-from django.utils.timezone import now
+from django.utils.timezone import datetime
 
-from .enums import CardType, TransactionType
+from my_financial_app.enums import CardType, TransactionType
 
 
 class Account(models.Model):
     owner_name = models.CharField(max_length=200)
     owner_surname = models.CharField(max_length=200)
-    created_date = models.DateField(default=now)
+    created_date = models.DateTimeField(default=datetime.now)
 
     def __str__(self):
         """A string representation of the model."""
@@ -20,15 +20,14 @@ class Card(models.Model):
         max_length=200,
         choices=[(tag, tag.value) for tag in CardType]
     )
-    owner = models.OneToOneField(
+    owner = models.ForeignKey(
         Account,
         on_delete=models.CASCADE,
-        primary_key=True,
     )
 
     def __str__(self):
         """A string representation of the model."""
-        return self.title
+        return self.description
 
 
 class CashAccount(models.Model):
@@ -40,17 +39,17 @@ class CashAccount(models.Model):
 
 
 class CashAccMonth(models.Model):
-    beginning_calendar_date = models.DateField(default=now)
+    beginning_calendar_date = models.DateTimeField(default=datetime.now)
 
 class CardMonth(CashAccMonth):
     # If your new cycle begins on 22 o 23 you can set up that day
     # with beginning_calendar_date otherwise put first day of month
-    closing_credit_card_date = models.DateField(default=now)
+    closing_credit_card_date = models.DateTimeField(default=datetime.now)
 
 
 class MoneyTransaction(models.Model):
     description = models.TextField(null=True)
-    created_date = models.DateField(default=now)
+    created_date = models.DateTimeField(default=datetime.now)
     amount = models.IntegerField()
     number_of_installments = models.IntegerField(null=True)
     total_number_of_installments = models.IntegerField(null=True)

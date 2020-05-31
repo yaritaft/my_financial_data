@@ -1,13 +1,28 @@
-from rest_framework import generics
+from rest_framework import generics, routers
 
-# from .serializers import TodoSerializer
-# from .models import Todo
+from my_financial_app.serializers import (
+    AccountSerializer,
+    CardSerializer
+)
+from my_financial_app.models import (
+    Account,
+    Card,
+)
 
-# class ListTodoView(generics.ListCreateAPIView):
-#     queryset = Todo.objects.all()
-#     serializer_class = TodoSerializer
+class ListAccountView(generics.ListCreateAPIView):
+    queryset = Account.objects.all()
+    serializer_class = AccountSerializer
 
 
-# class DetailTodoView(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = Todo.objects.all()
-#     serializer_class = TodoSerializer
+class DetailAccountView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Account.objects.all()
+    serializer_class = AccountSerializer
+
+class ListCardView(generics.ListCreateAPIView):
+    queryset = Card.objects.all()
+    serializer_class = CardSerializer
+
+
+class DetailCardView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Card.objects.all()
+    serializer_class = CardSerializer

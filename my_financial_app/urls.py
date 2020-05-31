@@ -1,8 +1,10 @@
 from django.urls import path
 
-from . import views
+from my_financial_app import views
 
 urlpatterns = [
-    #path("", views.ListTodoView.as_view()),
-    #path("<int:pk>/", views.DetailTodoView.as_view()),
+    path("account/", views.ListAccountView.as_view()),
+    path("account/<int:pk>/", views.DetailAccountView.as_view(), name='account-detail'),
+    path("card/", views.ListCardView.as_view()),
+    path("card/<int:pk>/", views.DetailCardView.as_view(), name="card-detail"),
 ]
