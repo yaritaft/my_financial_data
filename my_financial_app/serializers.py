@@ -4,11 +4,9 @@ from my_financial_app.enums import CardType, TransactionType
 from my_financial_app.models import (
     Account,
     Card,
-    CardMonth,
-    CashAccMonth,
-    CashAccount,
     MoneyTransaction,
 )
+
 
 class AccountSerializer(serializers.HyperlinkedModelSerializer):
     id = serializers.ReadOnlyField()
@@ -18,7 +16,7 @@ class AccountSerializer(serializers.HyperlinkedModelSerializer):
     owner_surname = serializers.CharField(
         required=True, allow_blank=True, max_length=100
     )
-    created_date = serializers.DateTimeField(
+    created_date = serializers.DateField(
         required=False,
     )
     card_set = serializers.HyperlinkedRelatedField(many=True, view_name='card-detail', read_only=True)
@@ -45,3 +43,39 @@ class CardSerializer(serializers.HyperlinkedModelSerializer):
         validated_data["owner"] = account
         card = Card.objects.create(**validated_data)
         return card
+
+class MoneyTransactionSerializer(serializers.HyperlinkedModelSerializer):
+    description = serializers.CharField()
+    created_date = serializers.DateField(
+        required=False,
+    )
+    category = serializers.CharField(
+        max_length=200
+    )
+    amount = serializers.IntegerField()
+    number_of_installments = serializers.IntegerField(required=False)
+    total_number_of_installments = serializers.IntegerField(required=False)
+    transaction_type = serializers.CharField(
+        max_length=200
+    )
+    card_id = serializers.IntegerField(write_only=True)
+    class Meta:
+        fields = [
+            "id",
+            "description",
+            "created_date",
+            "category",
+            "amount",
+            "number_of_installments",
+            "total_number_of_installments",
+            "transaction_type",
+            "card_id"
+        ]
+        model = MoneyTransaction
+    
+    def create(self, validated_data):
+        my_card_id = validated_data["card_id"]
+        my_card = Card.objects.get(id=my_card_id)
+        validated_data["card"] = my_card
+        money_transaction = MoneyTransaction.objects.create(**validated_data)
+        return money_transaction

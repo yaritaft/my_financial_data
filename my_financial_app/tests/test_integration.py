@@ -14,7 +14,7 @@ class TestModels(TestCase):
     def setUp(self):
         self.today = datetime.today()
 
-    def test_account(self):
+    def test_account_endpoint(self):
         my_account = Account(
             owner_name = "Yari",
             owner_surname = "Taft",
@@ -27,22 +27,24 @@ class TestModels(TestCase):
             logging.error(my_account.created_date)
             logging.error(self.today)
         
-    # def test_card(self):
+    # def test_cash_account_endpoint(self):
     #     my_account = Account(
     #         owner_name = "Yari",
     #         owner_surname = "Taft",
     #     )
     #     my_account.save()
-    #     my_card = CashAccount(owner=my_account)
-    #     my_card.save()
-    #     assert CashAccount.objects.all().first() == my_card
+    #     my_cash_account = CashAccount(owner=my_account)
+    #     my_cash_account.save()
+    #     assert CashAccount.objects.all().first() == my_cash_account
 
-    def test_card(self):
+    def test_card_endpoint(self):
         my_account = Account(
             owner_name = "Yari",
             owner_surname = "Taft",
         )
         my_account.save()
+        # my_cash_account = CashAccount(owner=my_account)
+        # my_cash_account.save()
         my_card = Card(
             description="VISA GOLD GALICIA 2785",
             bank="GALICIA",
@@ -52,14 +54,14 @@ class TestModels(TestCase):
         my_card.save()
         assert Card.objects.all().first() == my_card
 
-    def test_money_transaction(self):
+    def test_money_transaction_endpoint(self):
         my_account = Account(
             owner_name = "Yari",
             owner_surname = "Taft",
         )
         my_account.save()
-        # my_card = CashAccount(owner=my_account)
-        # my_card.save()
+        # my_cash_account = CashAccount(owner=my_account)
+        # my_cash_account.save()
         my_card = Card(
             description="VISA GOLD GALICIA 2785",
             bank="GALICIA",

@@ -2,11 +2,13 @@ from rest_framework import generics, routers
 
 from my_financial_app.serializers import (
     AccountSerializer,
-    CardSerializer
+    CardSerializer,
+    MoneyTransactionSerializer,
 )
 from my_financial_app.models import (
     Account,
     Card,
+    MoneyTransaction,
 )
 
 class ListAccountView(generics.ListCreateAPIView):
@@ -25,3 +27,11 @@ class ListCardView(generics.ListCreateAPIView):
 class DetailCardView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Card.objects.all()
     serializer_class = CardSerializer
+
+class ListTransactionView(generics.ListCreateAPIView):
+    queryset = MoneyTransaction.objects.all()
+    serializer_class = MoneyTransactionSerializer
+
+class DetailTransactionView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = MoneyTransaction.objects.all()
+    serializer_class = MoneyTransactionSerializer
