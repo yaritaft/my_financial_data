@@ -42,49 +42,6 @@ class CardSerializer(serializers.HyperlinkedModelSerializer):
     def create(self, validated_data):
         account_id = validated_data["owner"]
         account = Account.objects.get(id=account_id)
-        print(account)
         validated_data["owner"] = account
         card = Card.objects.create(**validated_data)
-        print(card)
         return card
-        
-
-
-# class AccountSerializer(serializers.ModelSerializer):
-#     id = serializers.ReadOnlyField()
-#     owner_name = serializers.CharField(
-#         required=True, allow_blank=True, max_length=100
-#     )
-#     owner_surname = serializers.CharField(
-#         required=True, allow_blank=True, max_length=100
-#     )
-#     created_date = serializers.DateTimeField(
-#         required=False,
-#     )
-
-#     class Meta:
-#         fields = ["id", "owner_name", "owner_surname", "created_date"]
-#         model = Account
-
-# class CardSerializer(serializers.ModelSerializer):
-#     id = serializers.ReadOnlyField()
-#     description = serializers.CharField(max_length=30)
-#     bank = serializers.CharField(max_length=40)
-#     card_type = serializers.CharField(
-#         max_length=200
-#     )
-#     owner = serializers.IntegerField(write_only=True)
-
-#     class Meta:
-#         fields = ["id", "description", "bank", "card_type", "owner"]
-#         model = Account
-    
-#     def create(self, validated_data):
-#         account_id = validated_data["owner"]
-#         account = Account.objects.get(id=account_id)
-#         print(account)
-#         validated_data["owner"] = account
-#         card = Card.objects.create(**validated_data)
-#         print(card)
-#         return card
-        
