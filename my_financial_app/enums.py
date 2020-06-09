@@ -17,3 +17,4 @@ class TransactionCategory(Enum):
     SERVICES = 'SERVICES'
     RENT = 'RENT'
     GROCERIES = 'GROCERIES'
+    EDUCATION = 'EDUCATION'
