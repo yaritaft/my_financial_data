@@ -38,7 +38,6 @@ class CardSerializer(serializers.HyperlinkedModelSerializer):
         model = Account
     
     def create(self, validated_data):
-        print(validated_data)
         account_id = validated_data["owner"]
         account = Account.objects.get(id=account_id)
         validated_data["owner"] = account
